@@ -1,0 +1,6 @@
+package-as: BagSmuggler
+
+ignore:
+  - docs
+  - README.md
+  - .github

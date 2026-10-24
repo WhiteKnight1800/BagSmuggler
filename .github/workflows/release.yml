@@ -1,0 +1,24 @@
+# Builds BagSmuggler and publishes it whenever a version tag (e.g. v1.4.3) is pushed.
+# - Always attaches the zip to a GitHub release.
+# - Also uploads to CurseForge once the CF_API_KEY secret is set and the
+#   "## X-Curse-Project-ID:" line is added to BagSmuggler.toc.
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      CF_API_KEY: ${{ secrets.CF_API_KEY }}
+      GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: BigWigsMods/packager@v2

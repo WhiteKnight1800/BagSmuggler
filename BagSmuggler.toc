@@ -1,0 +1,21 @@
+## Interface: 20506, 16001
+## Title: BagSmuggler
+## Notes: All-in-one bag addon: one big bag with auto categories, smart search, merged stacks, bank anywhere, alt inventories and junk selling.
+## Author: WhiteKnight (Smuggz_) - Discord: whiteknight3187
+## Version: 1.4.2
+## SavedVariables: BagSmugglerDB
+## IconTexture: Interface\AddOns\BagSmuggler\Media\Logo
+## Category: Bags & Inventory
+
+Core.lua
+UI.lua
+BagSkin.lua
+Categories.lua
+Junk.lua
+Data.lua
+Gear.lua
+Restack.lua
+Item.lua
+Window.lua
+Layout.lua
+Config.lua
