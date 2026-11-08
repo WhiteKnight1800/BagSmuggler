@@ -301,7 +301,7 @@ end
 
 function Window:Update(force)
     if not self.frame:IsShown() and not (force and self:IsLive()) then return end
-    if self:IsLive() and InCombatLockdown() then
+    if self:IsLive() and InCombatLockdown() and ns.Item:ButtonsLocked() then
         return self:CombatRefresh()
     end
     self.needsLayout = nil

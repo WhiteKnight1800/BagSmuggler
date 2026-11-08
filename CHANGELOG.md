@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.4.7
+- The bag now updates fully during combat (new loot sorted into its category, used-up items removed) on clients that allow it, including WoW Forever. Clients where item buttons are locked in combat keep the previous behaviour: tiles update in place and the layout tidies up when combat ends.
+
 ## 1.4.6
 - Every empty slot and every stack now gets its own tile, like the normal bags. The old space-saving view (one tile for merged stacks and one "Free" tile with a count) is still available as "Compact mode" in Settings > General.
 
