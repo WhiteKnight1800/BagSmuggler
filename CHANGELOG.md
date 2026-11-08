@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.4.5
+- Fix (WoW Forever): right-clicking items in your bags to use them (potions, food, quest items, opening containers) was blocked. Item buttons now hand the bag to the game the secure way.
+
 ## 1.4.4
 - Fix (WoW Forever): the gold money bar at the bottom of the Default Bags skin was drawn from the wrong part of the bag art. It now uses the right piece on Forever.
 

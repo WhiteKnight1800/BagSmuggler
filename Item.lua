@@ -392,8 +392,10 @@ function Item:GetLive(bag, slot, window)
         liveCount = liveCount + 1
         b = CreateFrame(ButtonType(), "BagSmugglerItem" .. liveCount, self:GetBagParent(bag, window), "ContainerFrameItemButtonTemplate")
         b:SetID(slot)
-        if b.SetBagID then b:SetBagID(bag) end
-        b.bagID = bag
+        -- Modern clients (WoW Forever) read the bag through a secure attribute.
+        -- Writing b.bagID from addon code taints it, which blocks right-click
+        -- use of every item, so only set it directly on clients without SetBagID.
+        if b.SetBagID then b:SetBagID(bag) else b.bagID = bag end
         b.wkBag, b.wkSlot, b.wkLive = bag, slot, true
         self:Decorate(b)
         b:HookScript("OnClick", Item.OnClick)
