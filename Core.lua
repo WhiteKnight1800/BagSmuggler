@@ -161,7 +161,7 @@ ns.defaults = {
         autoSellJunk = true,
         replaceBank = true,
         tooltipCounts = true,
-        mergeStacks = true,
+        mergeStacks = false,
         showUpgrades = true,
         showBoE = true,
         disabledCats = {},
@@ -215,6 +215,10 @@ function ns:ADDON_LOADED(name)
     if (st.styleVersion or 0) < 4 then
         st.skin = "Bags"         -- 1.4.0: Default Bags look becomes the default
         st.styleVersion = 4
+    end
+    if (st.layoutVersion or 0) < 1 then
+        st.mergeStacks = false   -- 1.4.6: show every stack and every empty slot like the default bags
+        st.layoutVersion = 1
     end
     if not ns.UI.skins[st.skin] then st.skin = "Bags" end
     events:UnregisterEvent("ADDON_LOADED")

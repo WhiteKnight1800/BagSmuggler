@@ -84,8 +84,8 @@ local function BuildGeneral(page)
     Toggle(page, "Replace the Blizzard bank", "replaceBank", 0, y - 30, PAGE_W)
     Toggle(page, "Show alt counts on item tooltips", "tooltipCounts", 0, y - 60, PAGE_W,
         "Adds lines like \"Smuggz: Bags 5, Bank 20\" to item tooltips.")
-    Toggle(page, "Merge identical stacks into one tile", "mergeStacks", 0, y - 90, PAGE_W,
-        "27 Soul Shards become one tile showing 27.\nClicking uses the smallest stack first.")
+    Toggle(page, "Compact mode: merge stacks and empty slots", "mergeStacks", 0, y - 90, PAGE_W,
+        "Off (default): every stack and every empty slot gets its own tile, like the normal bags.\nOn: 27 Soul Shards become one tile showing 27, and empty slots become one tile with a count.")
     Toggle(page, "Lock window positions", "locked", 0, y - 120, PAGE_W)
     Toggle(page, "Show keyring items", "showKeyring", 0, y - 150, PAGE_W, "TBC only.")
 

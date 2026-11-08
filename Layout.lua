@@ -16,6 +16,7 @@ function Window:CollectLive()
     local entries = {}
     local free, special, total = 0, 0, 0
     local firstFree
+    local freeList = {}
     local list = self.isBank and ns:GetBankBagList() or ns:GetBagList()
     for _, bag in ipairs(list) do
         local num = ns.SafeNumSlots(bag)
@@ -33,14 +34,15 @@ function Window:CollectLive()
                 local info = C.GetContainerItemInfo(bag, slot)
                 if info and info.iconFileID then
                     entries[#entries + 1] = ns.Categories:MakeLiveEntry(bag, slot, info)
-                elseif family == 0 and not firstFree then
-                    firstFree = { bag = bag, slot = slot, isFree = true }
+                elseif family == 0 then
+                    local e = { bag = bag, slot = slot, isFree = true, isEmpty = true }
+                    freeList[#freeList + 1] = e
+                    if not firstFree then firstFree = e end
                 end
             end
         end
     end
-    if firstFree then firstFree.freeCount = free end
-    return entries, { free = free, special = special, total = total, first = firstFree }
+    return entries, { free = free, special = special, total = total, first = firstFree, freeList = freeList }
 end
 
 function Window:CollectOffline()
@@ -124,7 +126,7 @@ function HeaderMixin:SetData(cat, count, extra, collapsed, isFree)
         self.chev:SetVertexColor(0.7, 0.72, 0.78)
     end
     self:PaintName()
-    self.count:SetText(isFree and "" or count)
+    self.count:SetText((isFree and count <= 1) and "" or count)
     self.extra:SetText(extra or "")
     self.chev:SetTexture(MEDIA .. (collapsed and "ChevronRight" or "ChevronDown"))
     self.chev:SetAlpha((collapsed or blizz) and 0.8 or 0)
@@ -347,7 +349,14 @@ function Window:Update(force)
         end
     end
     if stats.first then
-        sections[#sections + 1] = { cat = ns.Categories.byKey.empty, items = { stats.first }, isFree = true, count = 1 }
+        if s.mergeStacks then
+            -- compact: one tile showing how many slots are free
+            local one = { bag = stats.first.bag, slot = stats.first.slot, isFree = true, freeCount = stats.free }
+            sections[#sections + 1] = { cat = ns.Categories.byKey.empty, items = { one }, isFree = true, count = 1 }
+        else
+            -- every empty slot as its own tile, like the default bags
+            sections[#sections + 1] = { cat = ns.Categories.byKey.empty, items = stats.freeList, isFree = true, count = #stats.freeList }
+        end
     end
 
     -- Place sections (packed left to right, wrapping into rows)

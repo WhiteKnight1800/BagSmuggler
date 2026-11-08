@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.4.6
+- Every empty slot and every stack now gets its own tile, like the normal bags. The old space-saving view (one tile for merged stacks and one "Free" tile with a count) is still available as "Compact mode" in Settings > General.
+
 ## 1.4.5
 - Fix (WoW Forever): right-clicking items in your bags to use them (potions, food, quest items, opening containers) was blocked. Item buttons now hand the bag to the game the secure way.
 
