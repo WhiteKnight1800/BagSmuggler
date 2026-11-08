@@ -15,7 +15,11 @@ local HEAD_Y = { 0, 50 }
 local HEAD_L, HEAD_M, HEAD_R = { 64, 140 }, { 140, 175 }, { 175, 256 }
 local EDGE_Y = { 224, 248 }
 local EDGE_L, EDGE_R = { 64, 82 }, { 244, 256 }
-local FOOT_Y = { 212, 240 }
+-- The money bar sits 15px lower in the modern client's backpack art (WoW Forever
+-- and retail) than in the Classic/TBC art, so pick the rect for this client.
+local toc = select(4, GetBuildInfo()) or 0
+local MODERN_ART = (toc >= 16000 and toc < 20000) or toc >= 100000
+local FOOT_Y = MODERN_ART and { 227, 255 } or { 212, 240 }
 local FOOT_L, FOOT_M, FOOT_R = { 64, 110 }, { 110, 200 }, { 200, 256 }
 local PATCH = { 112, 127, 158, 160 }
 local CELL = { 120, 87, 162, 128 }          -- slot cell around a 37px button

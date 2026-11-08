@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.4.4
+- Fix (WoW Forever): the gold money bar at the bottom of the Default Bags skin was drawn from the wrong part of the bag art. It now uses the right piece on Forever.
+
 ## 1.4.3
 - Fix (WoW Forever): the bag window stopped growing part-way through, so items spilled outside the frame and the title, gold and Junk section were missing. Money display now uses the modern API on Forever.
 
