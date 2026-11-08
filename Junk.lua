@@ -80,7 +80,7 @@ function Junk:Sell()
         if ticker then ticker:Cancel() end
         self.selling = false
         if sold > 0 then
-            ns.Print(("Sold %d junk item%s for %s"):format(sold, sold == 1 and "" or "s", GetCoinTextureString(earned)))
+            ns.Print(("Sold %d junk item%s for %s"):format(sold, sold == 1 and "" or "s", ns.Coins(earned)))
         end
         ns.bags:UpdateFooter()
     end

@@ -359,7 +359,7 @@ function Window:Update(force)
     for i, sec in ipairs(sections) do
         local c = sec.cat
         local h = self:GetHeader(i)
-        local extra = (sec.value and sec.value > 0) and GetCoinTextureString(sec.value) or nil
+        local extra = (sec.value and sec.value > 0) and ns.Coins(sec.value) or nil
         h:SetData(c, sec.count, extra, sec.collapsed, sec.isFree)
         local headerW = h:ContentWidth()
 

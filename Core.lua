@@ -44,6 +44,23 @@ ns.C = C
 
 ns.GetItemInfo = (C_Item and C_Item.GetItemInfo) or GetItemInfo
 ns.GetItemInfoInstant = (C_Item and C_Item.GetItemInfoInstant) or GetItemInfoInstant
+-- Money as gold/silver/copper icons. Modern clients (WoW Forever) only have the
+-- C_CurrencyInfo version; the old global is gone there.
+local CoinString = (C_CurrencyInfo and C_CurrencyInfo.GetCoinTextureString) or GetCoinTextureString
+function ns.Coins(copper)
+    copper = math.floor(tonumber(copper) or 0)
+    if CoinString then
+        local ok, s = pcall(CoinString, copper)
+        if ok and s then return s end
+    end
+    local g, s, c = math.floor(copper / 10000), math.floor(copper / 100) % 100, copper % 100
+    local out = {}
+    if g > 0 then out[#out + 1] = g .. "|cffffd700g|r" end
+    if s > 0 then out[#out + 1] = s .. "|cffc7c7cfs|r" end
+    if c > 0 or #out == 0 then out[#out + 1] = c .. "|cffeda55fc|r" end
+    return table.concat(out, " ")
+end
+
 local GetDetailedLevel = (C_Item and C_Item.GetDetailedItemLevelInfo) or GetDetailedItemLevelInfo
 
 function ns.GetItemLevel(link)

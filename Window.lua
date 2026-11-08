@@ -294,11 +294,11 @@ function ns:CreateWindow(kind)
         GameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
         GameTooltip:AddLine(ns.realm, 1, 1, 1)
         for _, c in ipairs(list) do
-            GameTooltip:AddDoubleLine("|c" .. ns.ClassHex(c.class) .. c.name .. "|r", GetCoinTextureString(c.money), 1, 1, 1, 1, 1, 1)
+            GameTooltip:AddDoubleLine("|c" .. ns.ClassHex(c.class) .. c.name .. "|r", ns.Coins(c.money), 1, 1, 1, 1, 1, 1)
         end
         GameTooltip:AddLine(" ")
         local r, g, b = UI:Accent()
-        GameTooltip:AddDoubleLine("Total", GetCoinTextureString(total), r, g, b, 1, 1, 1)
+        GameTooltip:AddDoubleLine("Total", ns.Coins(total), r, g, b, 1, 1, 1)
         GameTooltip:Show()
     end)
     money:SetScript("OnLeave", GameTooltip_Hide)
@@ -323,7 +323,7 @@ function ns:CreateWindow(kind)
     else
         local sell = UI:Button(f, "Sell Junk", 78, 20, function(tt)
             tt:AddLine("Sell junk", 1, 1, 1)
-            tt:AddLine("Worth " .. GetCoinTextureString(ns.Junk:GetValue()), 0.85, 0.85, 0.85)
+            tt:AddLine("Worth " .. ns.Coins(ns.Junk:GetValue()), 0.85, 0.85, 0.85)
             tt:AddLine("Alt + Right-click an item to mark or unmark junk", 0.6, 0.6, 0.6, true)
         end)
         sell:SetPoint("LEFT", track, "RIGHT", 12, 0)
@@ -539,7 +539,7 @@ function Window:UpdateFooter()
 
     local data = self:GetOwnerData()
     local money = (self.owner and data and data.money) or GetMoney()
-    self.money.text:SetText(GetCoinTextureString(money or 0))
+    self.money.text:SetText(ns.Coins(money or 0))
     self.money:SetShown(not self.isBank)
 
     if self.sellButton then
