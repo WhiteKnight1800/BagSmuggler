@@ -76,9 +76,12 @@ function ns:CreateWindow(kind)
         self:StopMovingOrSizing()
         w:SavePosition()
     end)
+    -- hide first, then hook show/hide: on modern clients (WoW Forever) a new
+    -- frame starts visible, so Hide() here would run OnHide before the window
+    -- has its search box and other parts
+    f:Hide()
     f:SetScript("OnShow", function() w:OnShow() end)
     f:SetScript("OnHide", function() w:OnHide() end)
-    f:Hide()
     tinsert(UISpecialFrames, name)
 
     w.panel = UI:Panel(f, 10, nil, "dialog", true)
@@ -379,7 +382,7 @@ end
 function Window:OnHide()
     if SOUNDKIT then PlaySound(self.isBank and SOUNDKIT.IG_MAINMENU_CLOSE or SOUNDKIT.IG_BACKPACK_CLOSE) end
     if self.menu then self.menu:Hide() end
-    self.search:ClearFocus()
+    if self.search then self.search:ClearFocus() end
     if self.isBank then
         if ns.bankOpen and not ns.closingBank and not ns.showBlizzBank then
             ns:CloseBankInteraction()

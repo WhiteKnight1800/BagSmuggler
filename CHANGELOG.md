@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.4.9
+- Fix (WoW Forever): Lua error "Window.lua:382: attempt to index field 'search'" on login.
+
 ## 1.4.8
 - Fix: undid the 1.4.7 combat change, which caused "BagSmuggler has been blocked from an action" on WoW Forever. In combat, tiles update in place again (counts, used-up items, new loot dropping into empty slots) and the full re-sort happens as soon as combat ends.
 
