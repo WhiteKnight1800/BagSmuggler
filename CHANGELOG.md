@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.4.8
+- Fix: undid the 1.4.7 combat change, which caused "BagSmuggler has been blocked from an action" on WoW Forever. In combat, tiles update in place again (counts, used-up items, new loot dropping into empty slots) and the full re-sort happens as soon as combat ends.
+
 ## 1.4.7
 - The bag now updates fully during combat (new loot sorted into its category, used-up items removed) on clients that allow it, including WoW Forever. Clients where item buttons are locked in combat keep the previous behaviour: tiles update in place and the layout tidies up when combat ends.
 

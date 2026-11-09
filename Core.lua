@@ -225,7 +225,6 @@ function ns:ADDON_LOADED(name)
 end
 
 function ns:PLAYER_LOGIN()
-    self.Item:ButtonsLocked()   -- decide now, while out of combat
     self.Data:Init()
     self.bags = self:CreateWindow("bags")
     self.bank = self:CreateWindow("bank")

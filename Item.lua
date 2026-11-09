@@ -23,25 +23,6 @@ local function ButtonType()
     return buttonType
 end
 
--- Can bag item buttons be moved/shown/hidden in combat on this client?
--- Only if the game doesn't treat them as protected. Checked once, out of combat,
--- on a throwaway button; if we can't tell, play safe and assume they are locked.
-local buttonsLocked
-function Item:ButtonsLocked()
-    if buttonsLocked == nil then
-        if InCombatLockdown() then return true end
-        local ok, f = pcall(CreateFrame, ButtonType(), nil, UIParent, "ContainerFrameItemButtonTemplate")
-        if ok and f then
-            f:Hide()
-            local p1, p2 = f:IsProtected()
-            buttonsLocked = (p1 or p2) and true or false
-        else
-            buttonsLocked = true
-        end
-    end
-    return buttonsLocked
-end
-
 ---------------------------------------------------------------------------
 -- Look
 ---------------------------------------------------------------------------
