@@ -355,7 +355,66 @@ end
 ---------------------------------------------------------------------------
 -- Replace Blizzard bag toggles
 ---------------------------------------------------------------------------
+-- Modern clients (WoW Forever): replacing Blizzard's bag functions taints
+-- them. The merchant, auction house etc. call OpenAllBags when they open, so the
+-- whole vendor window became tainted and right-clicking an item there (sell /
+-- use) was blocked. Instead, leave Blizzard's functions alone, hide Blizzard's
+-- bag frames, and follow its open/close calls with secure post-hooks.
+function ns:InstallModernHooks()
+    local bags = self.bags
+    local hider = CreateFrame("Frame")
+    hider:Hide()
+    local function HideBlizzard()
+        if ContainerFrameCombinedBags then ContainerFrameCombinedBags:SetParent(hider) end
+        for i = 1, (NUM_CONTAINER_FRAMES or 13) do
+            local f = _G["ContainerFrame" .. i]
+            if f then f:SetParent(hider) end
+        end
+    end
+    HideBlizzard()
+    for _, fn in ipairs({ "ContainerFrame_SetFullScreenFrame", "ContainerFrame_ClearFullScreenFrame" }) do
+        if _G[fn] then hooksecurefunc(fn, HideBlizzard) end
+    end
+
+    -- Blizzard's toggles call its open/close functions internally, so collect
+    -- what was asked for this frame and act once on the next frame.
+    local want
+    local function Resolve()
+        local w = want
+        want = nil
+        if w == "toggle" then bags:Toggle()
+        elseif w == "open" then bags:Open()
+        elseif w == "close" then bags:Close() end
+    end
+    local function Ask(kind)
+        if not want then C_Timer.After(0, Resolve) end
+        if kind == "toggle" or want == "toggle" then want = "toggle"
+        elseif kind == "open" or want == "open" then want = "open"
+        else want = kind end
+    end
+    local function Hook(name, kind, bagArg)
+        if not _G[name] then return end
+        hooksecurefunc(name, function(id)
+            if bagArg and id and ns:IsBankBag(id) then return end
+            Ask(kind)
+        end)
+    end
+    Hook("ToggleAllBags", "toggle")
+    Hook("ToggleBackpack", "toggle")
+    Hook("ToggleBag", "toggle", true)
+    Hook("ToggleKeyRing", "toggle")
+    Hook("OpenAllBags", "open")
+    Hook("OpenBackpack", "open")
+    Hook("OpenBag", "open", true)
+    Hook("CloseAllBags", "close")
+    Hook("CloseBackpack", "close")
+    Hook("CloseBag", "close", true)
+end
+
 function ns:InstallHooks()
+    if ContainerFrameCombinedBags and hooksecurefunc then
+        return self:InstallModernHooks()
+    end
     local bags = self.bags
 
     local function toggle() bags:Toggle() end

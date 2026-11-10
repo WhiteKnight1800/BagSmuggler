@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.5.0
+- Fix (WoW Forever): "[ADDON_ACTION_FORBIDDEN] BagSmuggler tried to call the protected function UseContainerItem()" when right-clicking items, mainly at vendors. On Forever, BagSmuggler no longer replaces Blizzard's bag functions; it hides the default bags and follows their open/close calls instead, so vendor, auction house, bank and other windows stay untainted.
+
 ## 1.4.9
 - Fix (WoW Forever): Lua error "Window.lua:382: attempt to index field 'search'" on login.
 
